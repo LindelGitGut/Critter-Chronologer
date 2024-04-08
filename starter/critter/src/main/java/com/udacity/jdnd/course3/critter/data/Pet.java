@@ -3,23 +3,29 @@ package com.udacity.jdnd.course3.critter.data;
 
 import com.udacity.jdnd.course3.critter.pet.PetType;
 import jdk.nashorn.internal.objects.annotations.Getter;
+import org.hibernate.annotations.Nationalized;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 public class Pet {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long id;
-
-    String name;
+    private Long id;
 
 
-    PetType petType;
+    @Nationalized
+    private String name;
 
+    private PetType petType;
+
+    private LocalDate birthDate;
+    private String notes;
+
+    //Pet has one Owner (Customer)
+    @ManyToOne
+    private Customer owner;
 
 
     //TODO add Lombok Annotation for Getter Setter instead of Boilerplate
@@ -45,5 +51,21 @@ public class Pet {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 }
