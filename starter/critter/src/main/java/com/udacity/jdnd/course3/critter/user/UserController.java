@@ -39,7 +39,8 @@ public class UserController {
     public CustomerDTO saveCustomer(@RequestBody CustomerDTO customerDTO) {
 
         Customer customer = convertFromCustomerDto(customerDTO);
-        customerService.save(customer);
+        customer = customerService.save(customer);
+        return convertToCustomerDto(customer);
         //throw new UnsupportedOperationException();
     }
 

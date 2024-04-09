@@ -16,7 +16,7 @@ public class CustomerService {
     CustomerRepository customerRepository;
 
 
-    public void save(Customer customer) {
+    public Customer save(Customer customer) {
 
         //create new Customer if provided id is null, if so create new Customer
         if (customer.getId() == null) {
