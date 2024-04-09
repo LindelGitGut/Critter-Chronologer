@@ -20,14 +20,14 @@ public class CustomerService {
 
         //create new Customer if provided id is null, if so create new Customer
         if (customer.getId() == null) {
-            customerRepository.save(customer);
+            return customerRepository.save(customer);
         }
 
         //if id provided , find Customer, update
         else {
             Optional<Customer> oldCustomer = customerRepository.findById(customer.getId());
             if (oldCustomer.isPresent()) {
-                customerRepository.save(customer);
+                return customerRepository.save(customer);
             } else {
                 throw new IllegalArgumentException("No Customer with provided Id Found for Put Request found!");
             }
