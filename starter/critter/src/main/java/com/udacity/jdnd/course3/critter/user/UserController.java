@@ -64,7 +64,7 @@ public class UserController {
 
     @GetMapping("/customer/pet/{petId}")
     public CustomerDTO getOwnerByPet(@PathVariable long petId) {
-        throw new UnsupportedOperationException();
+        return convertToCustomerDto(customerService.getCustomerByPetId(petId));
     }
 
     @PostMapping("/employee")
@@ -91,6 +91,8 @@ public class UserController {
         throw new UnsupportedOperationException();
     }
 
+
+    //DTO Converter Methods
     private Customer convertFromCustomerDto(CustomerDTO customerDTO) {
         Customer customer = new Customer();
         BeanUtils.copyProperties(customerDTO,customer);

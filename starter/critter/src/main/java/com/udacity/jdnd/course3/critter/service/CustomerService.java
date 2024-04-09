@@ -38,4 +38,10 @@ public class CustomerService {
     public List<Customer> getAll(){
         return customerRepository.findAll();
     }
+
+    public Customer getCustomerByPetId(long petId) {
+        Optional<Customer> customer = customerRepository.findCustomerByPetId(petId);
+        if (customer.isPresent()){return customer.get();}
+        else {throw new IllegalArgumentException("Could not find Customer with provided Pet ID");}
+    }
 }
