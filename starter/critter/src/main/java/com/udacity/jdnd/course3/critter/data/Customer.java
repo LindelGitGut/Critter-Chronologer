@@ -1,5 +1,6 @@
 package com.udacity.jdnd.course3.critter.data;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
@@ -17,7 +18,7 @@ public class Customer extends User{
 
     //One Customer can have more than one Pet, in DTO Only ID if pet is Provided/Recived
     //TODO Check if Fetchtype.Lazy is the right prop for oneToMany
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Pet> pets;
 
     public String getPhoneNumber() {
