@@ -18,6 +18,7 @@ public class Pet {
     @Nationalized
     private String name;
 
+    @Enumerated(EnumType.STRING)
     private PetType petType;
 
     private LocalDate birthDate;
