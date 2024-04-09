@@ -4,6 +4,7 @@ import com.udacity.jdnd.course3.critter.data.Customer;
 import com.udacity.jdnd.course3.critter.data.Pet;
 import com.udacity.jdnd.course3.critter.service.CustomerService;
 import com.udacity.jdnd.course3.critter.service.PetService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.modelmapper.ModelMapper;
@@ -75,18 +76,22 @@ public class UserController {
     }
 
     private Customer convertFromCustomerDto(CustomerDTO customerDTO) {
-        Customer customer = modelmapper.map(customerDTO, Customer.class);
-
+        Customer customer = new Customer();
+        BeanUtils.copyProperties(customerDTO,customer);
         //if ids for Pets are Provided, find Pet From DB and include into Customer
-        if (!customerDTO.getPetIds().isEmpty()) {
+        List<Long> petids = new ArrayList<>();
+        petids = customerDTO.getPetIds();
+        if (petids != null){
             List<Pet> pets = petService.findAllPetsById(customerDTO.getPetIds());
-            customer.setPets(pets);
-        }
+            customer.setPets(pets);}
         return customer;
     }
 
     private CustomerDTO convertToCustomerDto(Customer customer) {
-        CustomerDTO customerDTO = modelmapper.map(customer, CustomerDTO.class);
+
+        CustomerDTO customerDTO = new CustomerDTO();
+        BeanUtils.copyProperties(customer, customerDTO);
+        //CustomerDTO customerDTO = modelmapper.map(customer, CustomerDTO.class);
         //check if Pets are provided, if so, obtain only ids of Pet
         if (!customer.getPets().isEmpty()) {
             List<Long> petIds = new ArrayList<>();
