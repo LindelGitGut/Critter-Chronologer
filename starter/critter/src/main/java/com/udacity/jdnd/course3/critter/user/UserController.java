@@ -1,8 +1,10 @@
 package com.udacity.jdnd.course3.critter.user;
 
 import com.udacity.jdnd.course3.critter.data.Customer;
+import com.udacity.jdnd.course3.critter.data.Employee;
 import com.udacity.jdnd.course3.critter.data.Pet;
 import com.udacity.jdnd.course3.critter.service.CustomerService;
+import com.udacity.jdnd.course3.critter.service.EmployeeService;
 import com.udacity.jdnd.course3.critter.service.PetService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,9 @@ public class UserController {
     @Autowired
     CustomerService customerService;
 
+    @Autowired
+    EmployeeService employeeService;
+
 
     //PetService is needed to provide the Dog Object obtained by id when update Customer;
     @Autowired
@@ -38,16 +43,23 @@ public class UserController {
 
     @PostMapping("/customer")
     public CustomerDTO saveCustomer(@RequestBody CustomerDTO customerDTO) {
-
         Customer customer = convertFromCustomerDto(customerDTO);
         customer = customerService.save(customer);
         return convertToCustomerDto(customer);
-        //throw new UnsupportedOperationException();
     }
 
     @GetMapping("/customer")
     public List<CustomerDTO> getAllCustomers() {
-        throw new UnsupportedOperationException();
+        List<CustomerDTO> allCustomerDto = new ArrayList<>();
+        List<Customer> allCustomer = customerService.getAll();
+
+        if (!allCustomer.isEmpty()){
+            for (Customer customer: allCustomer
+                 ) {
+                allCustomerDto.add(convertToCustomerDto(customer));
+            }
+        }
+        return allCustomerDto;
     }
 
     @GetMapping("/customer/pet/{petId}")
@@ -57,21 +69,25 @@ public class UserController {
 
     @PostMapping("/employee")
     public EmployeeDTO saveEmployee(@RequestBody EmployeeDTO employeeDTO) {
-        throw new UnsupportedOperationException();
+        Employee employee = convertFromEmployeeDto(employeeDTO);
+        return convertToEmployeeDto(employeeService.save(employee));
     }
 
     @PostMapping("/employee/{employeeId}")
     public EmployeeDTO getEmployee(@PathVariable long employeeId) {
-        throw new UnsupportedOperationException();
+        return convertToEmployeeDto(employeeService.findEmployeeById(employeeId));
     }
+
 
     @PutMapping("/employee/{employeeId}")
     public void setAvailability(@RequestBody Set<DayOfWeek> daysAvailable, @PathVariable long employeeId) {
-        throw new UnsupportedOperationException();
+        employeeService.setAvailabilityByID(employeeId, daysAvailable);
     }
+
 
     @GetMapping("/employee/availability")
     public List<EmployeeDTO> findEmployeesForService(@RequestBody EmployeeRequestDTO employeeDTO) {
+
         throw new UnsupportedOperationException();
     }
 
@@ -88,12 +104,11 @@ public class UserController {
     }
 
     private CustomerDTO convertToCustomerDto(Customer customer) {
-
         CustomerDTO customerDTO = new CustomerDTO();
         BeanUtils.copyProperties(customer, customerDTO);
         //CustomerDTO customerDTO = modelmapper.map(customer, CustomerDTO.class);
         //check if Pets are provided, if so, obtain only ids of Pet
-        if (!customer.getPets().isEmpty()) {
+        if (customer.getPets() != null) {
             List<Long> petIds = new ArrayList<>();
             for (Pet pet : customer.getPets()
             ) {
@@ -102,6 +117,21 @@ public class UserController {
         }
         return customerDTO;
     }
+
+    private EmployeeDTO convertToEmployeeDto(Employee employee){
+        EmployeeDTO employeeDTO= new EmployeeDTO();
+        BeanUtils.copyProperties(employee, employeeDTO);
+        return employeeDTO;
+    }
+
+    private Employee convertFromEmployeeDto(EmployeeDTO employeeDTO){
+        Employee employee = new Employee();
+        BeanUtils.copyProperties(employeeDTO, employee);
+        return employee;
+    }
+
+
+
 
 
 }

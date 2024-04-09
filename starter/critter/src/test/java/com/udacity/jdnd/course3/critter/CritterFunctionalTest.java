@@ -42,6 +42,8 @@ public class CritterFunctionalTest {
     @Autowired
     private ScheduleController scheduleController;
 
+
+    //passed
     @Test
     public void testCreateCustomer(){
         CustomerDTO customerDTO = createCustomerDTO();
@@ -52,6 +54,7 @@ public class CritterFunctionalTest {
         Assertions.assertTrue(retrievedCustomer.getId() > 0);
     }
 
+    //passed
     @Test
     public void testCreateEmployee(){
         EmployeeDTO employeeDTO = createEmployeeDTO();
@@ -119,6 +122,7 @@ public class CritterFunctionalTest {
         Assertions.assertEquals(owner.getPetIds().get(0), newPet.getId());
     }
 
+    //passed
     @Test
     public void testChangeEmployeeAvailability() {
         EmployeeDTO employeeDTO = createEmployeeDTO();
