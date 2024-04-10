@@ -55,14 +55,14 @@ public class PetController {
     private PetDTO convertToPetDto(Pet pet) {
         PetDTO petDTO = new PetDTO();
         BeanUtils.copyProperties(pet, petDTO);
-        //TODO check if further conversion is needed
+        //TODO convert owner to owner id
         return petDTO;
     }
 
     private Pet convertFromPetDto(PetDTO petDTO) {
         Pet pet = new Pet();
         BeanUtils.copyProperties(petDTO, pet);
-        //TODO check if further conversion is needed
+        //TODO find owner by id and add as owener object
         return pet;
     }
 }
