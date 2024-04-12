@@ -26,7 +26,7 @@ public class Pet implements Serializable {
     private String notes;
 
     //Pet has one Owner (Customer)
-    @ManyToOne(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+    @ManyToOne(fetch=FetchType.EAGER)
     //@JoinColumn(name = "owner_id")
     private Customer owner;
 
