@@ -94,6 +94,7 @@ public class UserController {
 
     @GetMapping("/employee/availability")
     public List<EmployeeDTO> findEmployeesForService(@RequestBody EmployeeRequestDTO employeeDTO) {
+        employeeService.getEmloyeesForService()
         //TODO Check logic for Request and implement Methods in EmployeeService
         throw new UnsupportedOperationException();
     }
