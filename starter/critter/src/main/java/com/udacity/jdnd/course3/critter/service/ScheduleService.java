@@ -5,6 +5,7 @@ import com.udacity.jdnd.course3.critter.repository.ScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -15,14 +16,28 @@ public class ScheduleService {
     ScheduleRepository scheduleRepository;
 
 
-    public void save(Schedule schedule){
+    public Schedule save(Schedule schedule){
         if (schedule.getId() != null){
             Optional<Schedule> optSchedule =scheduleRepository.findById(schedule.getId());
-            if (optSchedule.isPresent()){scheduleRepository.save(schedule);}
-            else {throw new IllegalArgumentException("Could nit find Schedule with provided id!");}
+            if (optSchedule.isPresent()){return scheduleRepository.save(schedule);}
+            else {throw new IllegalArgumentException("Could not find Schedule with provided id!");}
         }
-        else {scheduleRepository.save(schedule);}
+        else { return scheduleRepository.save(schedule);}
     }
 
+    public List<Schedule> getAllSchedules() {
+        return scheduleRepository.findAll();
+    }
 
+    public List<Schedule> getSchedulesByPetId(Long id) {
+        return scheduleRepository.findSchedulesByPetId(id);
+    }
+
+    public List<Schedule> getSchedulesByEmployeeId(long employeeId) {
+        return scheduleRepository.findSchedulesByEmployeeId(employeeId);
+    }
+
+    public List<Schedule> getSchedulesCustomerId(long customerId) {
+        return scheduleRepository.findSchedulesCustomerId(customerId);
+    }
 }

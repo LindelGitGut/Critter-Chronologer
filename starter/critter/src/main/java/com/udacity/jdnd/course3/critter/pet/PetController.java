@@ -56,6 +56,9 @@ public class PetController {
     }
 
 
+
+
+    //TODO check why Pettype is missing when returned
     private PetDTO convertToPetDto(Pet pet) {
         PetDTO petDTO = new PetDTO();
         BeanUtils.copyProperties(pet, petDTO);
