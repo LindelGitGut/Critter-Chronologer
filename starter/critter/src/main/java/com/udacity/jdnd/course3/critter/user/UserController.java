@@ -8,6 +8,7 @@ import com.udacity.jdnd.course3.critter.service.EmployeeService;
 import com.udacity.jdnd.course3.critter.service.PetService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.modelmapper.ModelMapper;
 
@@ -46,6 +47,12 @@ public class UserController {
         Customer customer = convertFromCustomerDto(customerDTO);
         customer = customerService.save(customer);
         return convertToCustomerDto(customer);
+    }
+
+    @DeleteMapping("/customer/{id}")
+    public ResponseEntity<?> deleteCustomer(@PathVariable("id") Long id){
+        customerService.removeCustomerByID(id);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/customer")
