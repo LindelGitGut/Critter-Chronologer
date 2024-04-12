@@ -116,6 +116,7 @@ public class UserController {
             ) {
                 petIds.add(pet.getId());
             }
+            customerDTO.setPetIds(petIds);
         }
         return customerDTO;
     }
