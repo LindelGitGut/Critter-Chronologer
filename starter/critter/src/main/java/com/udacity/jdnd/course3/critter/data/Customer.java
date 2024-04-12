@@ -1,14 +1,21 @@
 package com.udacity.jdnd.course3.critter.data;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
+import org.hibernate.annotations.Nationalized;
+
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
 @Entity
-public class Customer extends User{
+public class Customer{
+
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    @Id
+    private Long id;
+    @Nationalized
+    private String name;
 
     //Customer has phoneNumber
     private String phoneNumber;
@@ -16,10 +23,18 @@ public class Customer extends User{
     //Customer can have Notes
     private String notes;
 
-    //One Customer can have more than one Pet, in DTO Only ID if pet is Provided/Recived
-    //TODO Check if Fetchtype.Lazy is the right prop for oneToMany
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+
+    
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Pet> pets;
+
+
+    public void addPet(Pet pet){
+        if (this.pets == null){
+            this.pets = new ArrayList<>();
+        }
+        pets.add(pet);
+    }
 
     public String getPhoneNumber() {
         return phoneNumber;
@@ -43,5 +58,21 @@ public class Customer extends User{
 
     public void setPets(List<Pet> pets) {
         this.pets = pets;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

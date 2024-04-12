@@ -6,12 +6,13 @@ import jdk.nashorn.internal.objects.annotations.Getter;
 import org.hibernate.annotations.Nationalized;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
-public class Pet {
+public class Pet implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
 
@@ -25,7 +26,8 @@ public class Pet {
     private String notes;
 
     //Pet has one Owner (Customer)
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+    //@JoinColumn(name = "owner_id")
     private Customer owner;
 
 
@@ -68,5 +70,13 @@ public class Pet {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public Customer getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Customer owner) {
+        this.owner = owner;
     }
 }

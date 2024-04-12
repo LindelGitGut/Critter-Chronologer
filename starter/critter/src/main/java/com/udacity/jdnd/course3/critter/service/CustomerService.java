@@ -39,9 +39,20 @@ public class CustomerService {
         return customerRepository.findAll();
     }
 
+    public Customer findById(Long id){
+        Optional<Customer> customer= customerRepository.findById(id);
+        if (customer.isPresent()){
+            return customer.get();
+        }
+
+        else {
+            throw new IllegalArgumentException("Could not find Customer with provieded ID");
+        }
+    }
+
     public Customer getCustomerByPetId(long petId) {
         Optional<Customer> customer = customerRepository.findCustomerByPetId(petId);
         if (customer.isPresent()){return customer.get();}
-        else {throw new IllegalArgumentException("Could not find Customer with provided Pet ID");}
+        else {throw new IllegalArgumentException("Could not find Customer with provided Pet ID: " + petId);}
     }
 }

@@ -4,12 +4,13 @@ package com.udacity.jdnd.course3.critter.data;
 import org.hibernate.annotations.Nationalized;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public class User {
+public class User implements Serializable {
 
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
     @Nationalized

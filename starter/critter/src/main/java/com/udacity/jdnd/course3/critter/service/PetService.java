@@ -1,11 +1,14 @@
 package com.udacity.jdnd.course3.critter.service;
 
 
+import com.udacity.jdnd.course3.critter.data.Customer;
 import com.udacity.jdnd.course3.critter.data.Pet;
+import com.udacity.jdnd.course3.critter.repository.CustomerRepository;
 import com.udacity.jdnd.course3.critter.repository.PetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +17,9 @@ public class PetService {
 
     @Autowired
     PetRepository petRepository;
+
+    @Autowired
+    CustomerRepository customerRepository;
 
     //TODO Implement
 
@@ -36,17 +42,41 @@ public class PetService {
         }
     }
 
+    @Transactional
     public Pet save(Pet pet) {
         //check if id is null, if so save
         if (pet.getId() == null) {
-            return petRepository.save(pet);
+
+            Pet newPet = petRepository.save(pet);
+            if (pet.getOwner() != null){
+                Optional<Customer> optCustomer = customerRepository.findById(pet.getOwner().getId());
+                if (optCustomer.isPresent()){
+                    Customer customer = optCustomer.get();
+                    customer.addPet(newPet);
+                    customerRepository.save(customer);
+
+                }
+                else {throw new IllegalArgumentException("Could not find Owner with associated owner id for new Pet");}
+            }
+            return newPet;
         }
         //check if Pet is found in DB if Not throw Exception else override
         else {
             Optional<Pet> optPet = petRepository.findById(pet.getId());
             if (optPet.isPresent()) {
+
+                Pet newPet = petRepository.save(pet);
                 // pet is available in Database so overriding it
-                return petRepository.save(pet);
+                if (pet.getOwner() != null){
+                    Optional<Customer> optCustomer = customerRepository.findById(pet.getOwner().getId());
+                    if (optCustomer.isPresent()){
+                        Customer customer = optCustomer.get();
+                        customer.addPet(newPet);
+                        customerRepository.save(customer);
+                    }
+                    else {throw new IllegalArgumentException("Could not find Owner with associated owner id for new Pet");}
+                }
+                return newPet;
             } else {
                 throw new IllegalArgumentException("Pet with provided ID was not found in DB");
             }
