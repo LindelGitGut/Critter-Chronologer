@@ -55,4 +55,13 @@ public class CustomerService {
         if (customer.isPresent()){return customer.get();}
         else {throw new IllegalArgumentException("Could not find Customer with provided Pet ID: " + petId);}
     }
+
+    public void removeCustomerByID(Long id){
+        Optional<Customer> customer = customerRepository.findById(id);
+        if(customer.isPresent()){
+            customerRepository.delete(customer.get());
+        }
+        else {throw new IllegalArgumentException("Could not find Customer with provided id");}
+
+    }
 }
