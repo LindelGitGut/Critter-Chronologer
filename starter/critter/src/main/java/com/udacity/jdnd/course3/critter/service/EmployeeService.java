@@ -4,10 +4,14 @@ package com.udacity.jdnd.course3.critter.service;
 import com.udacity.jdnd.course3.critter.data.Employee;
 import com.udacity.jdnd.course3.critter.repository.EmployeeRepository;
 import com.udacity.jdnd.course3.critter.user.EmployeeDTO;
+import com.udacity.jdnd.course3.critter.user.EmployeeSkill;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -44,5 +48,17 @@ public class EmployeeService {
         employeeRepository.save(employee);
     }
 
-    //TODO implement needed methods
+    public List<Employee> getAvailableEmloyeesForService(Set<EmployeeSkill> skills, LocalDate date) {
+        DayOfWeek dayOfWeek= date.getDayOfWeek();
+        System.out.println("Debug DayOfWeek: " +dayOfWeek);
+        List<Employee> employees =  employeeRepository.findEmployeeByDayOfWeek(dayOfWeek);
+
+        for (Employee employee:employees
+             ) {
+            if (!employee.getSkills().containsAll(skills)){employees.remove(employee);}
+        }
+        return employees;
+    }
+
+
 }

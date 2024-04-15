@@ -39,8 +39,6 @@ public class UserController {
     @Autowired
     PetService petService;
 
-    @Autowired
-    ModelMapper modelmapper;
 
     @PostMapping("/customer")
     public CustomerDTO saveCustomer(@RequestBody CustomerDTO customerDTO) {
@@ -94,9 +92,12 @@ public class UserController {
 
     @GetMapping("/employee/availability")
     public List<EmployeeDTO> findEmployeesForService(@RequestBody EmployeeRequestDTO employeeDTO) {
-        employeeService.getEmloyeesForService()
-        //TODO Check logic for Request and implement Methods in EmployeeService
-        throw new UnsupportedOperationException();
+        List<EmployeeDTO> availableEmployees = new ArrayList<>();
+        for (Employee emploeyee:employeeService.getAvailableEmloyeesForService(employeeDTO.getSkills(), employeeDTO.getDate())
+             ) {
+            availableEmployees.add(convertToEmployeeDto(emploeyee));
+        }
+        return availableEmployees;
     }
 
 

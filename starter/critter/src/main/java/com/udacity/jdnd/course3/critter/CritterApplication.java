@@ -15,9 +15,4 @@ public class CritterApplication {
 		SpringApplication.run(CritterApplication.class, args);
 	}
 
-	@Bean
-	ModelMapper getModelMapperBean (){
-		return new ModelMapper();
-	}
-
 }
