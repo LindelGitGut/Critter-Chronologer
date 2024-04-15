@@ -2,17 +2,26 @@ package com.udacity.jdnd.course3.critter.data;
 
 
 import com.udacity.jdnd.course3.critter.user.EmployeeSkill;
+import lombok.Data;
+import org.hibernate.annotations.Nationalized;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.DayOfWeek;
 import java.util.Set;
 
 @Entity
-public class Employee extends User implements Serializable {
+@Data
+public class Employee implements Serializable {
+
+
+
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    private Long id;
+    @Nationalized
+    private String name;
+
 
     //Employee has one or more Skills, but EmployeeSkill/daysAvailable is not worth own Entity so added as
     // Simple Element Collection
@@ -23,7 +32,7 @@ public class Employee extends User implements Serializable {
     @Enumerated(EnumType.STRING)
     private Set<DayOfWeek> daysAvailable;
 
-    public Set<EmployeeSkill> getSkills() {
+ /*   public Set<EmployeeSkill> getSkills() {
         return skills;
     }
 
@@ -37,5 +46,5 @@ public class Employee extends User implements Serializable {
 
     public void setDaysAvailable(Set<DayOfWeek> daysAvailable) {
         this.daysAvailable = daysAvailable;
-    }
+    }*/
 }

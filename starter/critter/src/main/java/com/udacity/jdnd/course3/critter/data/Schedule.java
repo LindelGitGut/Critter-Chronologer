@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-
+@Data
 public class Schedule implements Serializable {
 
     @Id
@@ -31,7 +31,7 @@ public class Schedule implements Serializable {
     @ElementCollection
     private Set<EmployeeSkill> activities;
 
-    public Long getId() {
+   /* public Long getId() {
         return id;
     }
 
@@ -69,5 +69,5 @@ public class Schedule implements Serializable {
 
     public void setActivities(Set<EmployeeSkill> activities) {
         this.activities = activities;
-    }
+    }*/
 }

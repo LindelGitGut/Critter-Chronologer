@@ -1,5 +1,6 @@
 package com.udacity.jdnd.course3.critter.data;
 
+import lombok.Data;
 import org.hibernate.annotations.Nationalized;
 
 import javax.persistence.*;
@@ -8,6 +9,7 @@ import java.util.List;
 
 
 @Entity
+@Data
 public class Customer{
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,7 +38,11 @@ public class Customer{
         pets.add(pet);
     }
 
-    public String getPhoneNumber() {
+    public void removePet(Pet pet){
+        if (pets != null){pets.remove(pet);}
+        }
+
+  /*  public String getPhoneNumber() {
         return phoneNumber;
     }
 
@@ -74,5 +80,5 @@ public class Customer{
 
     public void setName(String name) {
         this.name = name;
-    }
+    }*/
 }

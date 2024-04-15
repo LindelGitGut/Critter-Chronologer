@@ -3,6 +3,7 @@ package com.udacity.jdnd.course3.critter.data;
 
 import com.udacity.jdnd.course3.critter.pet.PetType;
 import jdk.nashorn.internal.objects.annotations.Getter;
+import lombok.Data;
 import org.hibernate.annotations.Nationalized;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
+@Data
 public class Pet implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,8 +33,8 @@ public class Pet implements Serializable {
     private Customer owner;
 
 
-    //TODO add Lombok Annotation for Getter Setter instead of Boilerplate
-    public Long getId() {
+
+/*    public Long getId() {
         return id;
     }
 
@@ -78,5 +80,5 @@ public class Pet implements Serializable {
 
     public void setOwner(Customer owner) {
         this.owner = owner;
-    }
+    }*/
 }
