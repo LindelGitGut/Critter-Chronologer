@@ -58,10 +58,11 @@ public class PetController {
 
 
 
-    //TODO check why Pettype is missing when returned
+
     private PetDTO convertToPetDto(Pet pet) {
         PetDTO petDTO = new PetDTO();
         BeanUtils.copyProperties(pet, petDTO);
+        petDTO.setType(pet.getPetType());
         if(pet.getOwner().getId() != null){
             petDTO.setOwnerId(pet.getOwner().getId());
         }
@@ -72,6 +73,7 @@ public class PetController {
     private Pet convertFromPetDto(PetDTO petDTO) {
         Pet pet = new Pet();
         BeanUtils.copyProperties(petDTO, pet);
+        pet.setPetType(petDTO.getType());
         if((Long) petDTO.getOwnerId() != null){
             pet.setOwner(customerService.findById(petDTO.getOwnerId()));
         }
