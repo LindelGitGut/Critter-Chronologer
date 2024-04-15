@@ -12,7 +12,7 @@ import java.util.Optional;
 @Service
 public class CustomerService {
 
-    //TODO implement
+
     @Autowired
     CustomerRepository customerRepository;
 
