@@ -1,8 +1,5 @@
 package com.udacity.jdnd.course3.critter.data;
-
-
 import com.udacity.jdnd.course3.critter.pet.PetType;
-import jdk.nashorn.internal.objects.annotations.Getter;
 import lombok.Data;
 import org.hibernate.annotations.Nationalized;
 
