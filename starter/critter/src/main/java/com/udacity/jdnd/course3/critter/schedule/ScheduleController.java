@@ -38,8 +38,8 @@ public class ScheduleController {
     @GetMapping
     public List<ScheduleDTO> getAllSchedules() {
         List<ScheduleDTO> scheduleDTOS = new ArrayList<>();
-        for (Schedule schedule:scheduleService.getAllSchedules()
-             ) {
+        for (Schedule schedule : scheduleService.getAllSchedules()
+        ) {
             scheduleDTOS.add(convertToScheduleDto(schedule));
         }
         return scheduleDTOS;
@@ -48,8 +48,8 @@ public class ScheduleController {
     @GetMapping("/pet/{petId}")
     public List<ScheduleDTO> getScheduleForPet(@PathVariable long petId) {
         List<ScheduleDTO> scheduleDTOS = new ArrayList<>();
-        for (Schedule schedule: scheduleService.getSchedulesByPetId(petId)
-             ) {
+        for (Schedule schedule : scheduleService.getSchedulesByPetId(petId)
+        ) {
             scheduleDTOS.add(convertToScheduleDto(schedule));
         }
         return scheduleDTOS;
@@ -58,7 +58,7 @@ public class ScheduleController {
     @GetMapping("/employee/{employeeId}")
     public List<ScheduleDTO> getScheduleForEmployee(@PathVariable long employeeId) {
         List<ScheduleDTO> scheduleDTOS = new ArrayList<>();
-        for (Schedule schedule: scheduleService.getSchedulesByEmployeeId(employeeId)
+        for (Schedule schedule : scheduleService.getSchedulesByEmployeeId(employeeId)
         ) {
             scheduleDTOS.add(convertToScheduleDto(schedule));
         }
@@ -69,7 +69,7 @@ public class ScheduleController {
     @GetMapping("/customer/{customerId}")
     public List<ScheduleDTO> getScheduleForCustomer(@PathVariable long customerId) {
         List<ScheduleDTO> scheduleDTOS = new ArrayList<>();
-        for (Schedule schedule: scheduleService.getSchedulesCustomerId(customerId)
+        for (Schedule schedule : scheduleService.getSchedulesCustomerId(customerId)
         ) {
             scheduleDTOS.add(convertToScheduleDto(schedule));
         }
@@ -77,44 +77,44 @@ public class ScheduleController {
     }
 
 
-
-    private Schedule convertFromScheduleDto(ScheduleDTO scheduleDTO){
+    private Schedule convertFromScheduleDto(ScheduleDTO scheduleDTO) {
         Schedule schedule = new Schedule();
         BeanUtils.copyProperties(scheduleDTO, schedule);
-        if (scheduleDTO.getEmployeeIds() != null){
+        if (scheduleDTO.getEmployeeIds() != null) {
             List<Employee> employees = new ArrayList<>();
-            for (Long employeeid: scheduleDTO.getEmployeeIds()
-                 ) {
+            for (Long employeeid : scheduleDTO.getEmployeeIds()
+            ) {
                 employees.add(employeeService.findEmployeeById(employeeid));
             }
             schedule.setEmployees(employees);
         }
-        if(scheduleDTO.getPetIds() != null){
+        if (scheduleDTO.getPetIds() != null) {
             List<Pet> pets = new ArrayList<>();
-            for (Long petId: scheduleDTO.getPetIds()
-                 ) {
+            for (Long petId : scheduleDTO.getPetIds()
+            ) {
                 pets.add(petService.findPetById(petId));
             }
             schedule.setPets(pets);
         }
         return schedule;
     }
-    private ScheduleDTO convertToScheduleDto(Schedule schedule){
+
+    private ScheduleDTO convertToScheduleDto(Schedule schedule) {
         ScheduleDTO scheduleDTO = new ScheduleDTO();
         BeanUtils.copyProperties(schedule, scheduleDTO);
-        if(schedule.getEmployees() != null){
+        if (schedule.getEmployees() != null) {
             List<Long> employeeids = new ArrayList<>();
-            for (Employee employee: schedule.getEmployees()
-                 ) {
+            for (Employee employee : schedule.getEmployees()
+            ) {
                 employeeids.add(employee.getId());
             }
             scheduleDTO.setEmployeeIds(employeeids);
         }
 
-        if(schedule.getPets() != null){
+        if (schedule.getPets() != null) {
             List<Long> petids = new ArrayList<>();
-            for (Pet pet: schedule.getPets()
-                 ) {
+            for (Pet pet : schedule.getPets()
+            ) {
                 petids.add(pet.getId());
             }
             scheduleDTO.setPetIds(petids);
