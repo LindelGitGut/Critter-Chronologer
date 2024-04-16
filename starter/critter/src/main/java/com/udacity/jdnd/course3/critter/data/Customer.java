@@ -10,7 +10,7 @@ import java.util.List;
 
 @Entity
 @Data
-public class Customer{
+public class Customer {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
@@ -26,59 +26,22 @@ public class Customer{
     private String notes;
 
 
-    
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Pet> pets;
 
 
-    public void addPet(Pet pet){
-        if (this.pets == null){
+    public void addPet(Pet pet) {
+        if (this.pets == null) {
             this.pets = new ArrayList<>();
         }
         pets.add(pet);
     }
 
-    public void removePet(Pet pet){
-        if (pets != null){pets.remove(pet);}
+    public void removePet(Pet pet) {
+        if (pets != null) {
+            pets.remove(pet);
         }
-
-  /*  public String getPhoneNumber() {
-        return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
 
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
-
-    public List<Pet> getPets() {
-        return pets;
-    }
-
-    public void setPets(List<Pet> pets) {
-        this.pets = pets;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }*/
 }
