@@ -10,7 +10,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.modelmapper.ModelMapper;
 
 
 import java.time.DayOfWeek;
@@ -93,7 +92,7 @@ public class UserController {
     @GetMapping("/employee/availability")
     public List<EmployeeDTO> findEmployeesForService(@RequestBody EmployeeRequestDTO employeeDTO) {
         List<EmployeeDTO> availableEmployees = new ArrayList<>();
-        for (Employee emploeyee:employeeService.getAvailableEmloyeesForService(employeeDTO.getSkills(), employeeDTO.getDate())
+        for (Employee emploeyee:employeeService.getAvailableEmployeesForService(employeeDTO.getSkills(), employeeDTO.getDate())
              ) {
             availableEmployees.add(convertToEmployeeDto(emploeyee));
         }

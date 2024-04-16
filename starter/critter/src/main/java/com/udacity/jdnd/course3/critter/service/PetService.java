@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class PetService {
 
     @Autowired
@@ -41,7 +42,7 @@ public class PetService {
         }
     }
 
-    @Transactional
+
     public Pet save(Pet pet) {
         //check if id is null, if so save
         if (pet.getId() == null) {
